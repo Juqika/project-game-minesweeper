@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Minesweeper</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>   
+    <div class="flex-container">
+        <div class="game-board">
+            <br>
+            <table id="board"></table>
+        </div>
+    </div>
+    <section id="footer">
+        <div id="size-btns" class="button-container">
+            <button id="size-9" class="btn easy">Easy</button>
+            <button id="size-16" class="btn medium">Medium</button> 
+            <button id="size-30" class="btn hard">Hard</button>
+        </div>
+        <div id="clock"><em>"Shift + Click"</em> to toggle <img src="images/flag.png"></div>
+    </section>
+    <script src="js/cell.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        // Tambahkan script pengganti jQuery jika diperlukan
+        document.addEventListener("DOMContentLoaded", function () {
+            // Contoh mengganti event handler jQuery dengan Vanilla JS
+            const buttons = document.querySelectorAll("#size-btns button");
+            buttons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const size = this.id.split("-")[1]; // Mendapatkan ukuran dari ID tombol
+                    console.log(`Selected size: ${size}`);
+                    // Tambahkan logika untuk mengatur ulang papan game sesuai ukuran
+                });
+            });
+
+            // Tambahkan script lain jika sebelumnya mengandalkan jQuery
+        });
+    </script>
+</body>
+</html>

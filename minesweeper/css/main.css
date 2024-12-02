@@ -1,0 +1,224 @@
+@font-face {
+    font-family: "Press Start";
+    src: url("./prstart.ttf");
+}
+
+* {
+    -o-user-select: none;
+    user-select: none;
+}
+
+body {
+    background-image: url('bg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+}
+
+#board {
+    background-color: lightgray;
+}
+
+.button-container {
+    display: flex;
+    gap: 10px;
+  }
+
+button {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+    background-color: lightgray;
+    color: slategray;
+    cursor: pointer;
+}
+
+.easy {
+    background-color: #4CAF50;
+  }
+
+.easy:hover {
+    background-color: #45a049;
+  }
+
+.medium {
+    background-color: #FFA500;
+  }
+
+.medium:hover {
+    background-color: #e69500;
+  }
+
+.hard {
+    background-color: #F44336;
+  }
+
+.hard:hover {
+    background-color: #d32f2f;
+  }
+
+#clock {
+    font-family: 'Arial', sans-serif;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    float: right;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    width: auto;
+    height: 30px;
+    padding: 5px 10px;
+    background-color: #f9f9f9;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#clock:hover {
+    background-color: #e6e6e6;
+    transform: scale(1.05);
+}
+
+#clock img {
+    margin-left: 8px;
+    height: 18px;
+    width: auto;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: center;
+    margin: 80px 10px;
+}
+
+#footer {
+    text-align: center;
+    position: fixed;
+    height: 38px;
+    background-color: #2A1762;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    padding: 10px 0; 
+    color: #000000;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    border-top: 2px solid #4E3E97;
+    box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+.menu a {
+    font-family: 'MS Sans Serif';
+    color: black;
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 0;
+}
+
+#reset {
+    display: inline-block;
+    text-align: center;
+    width: 35px;
+    height: 35px;
+    border: 1px solid;
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+#reset img {
+    max-width: 110%;
+    display: block;
+    margin: auto;
+}
+
+#reset:hover {
+    text-align: center;
+    cursor: pointer;
+}
+
+.revealed {
+    font-family: "Press Start";
+    background-color: #C0C0C0;
+    font-size: 80%;
+    text-align: center;
+    border: none;
+}
+
+.sidebar {
+    vertical-align: top;
+    max-width: 300px;
+    margin: 0 30px;
+}
+
+#size-btns {
+    float: left;
+    display: inline;
+    margin: 1px;
+}
+
+#start {
+    float: left;
+}
+
+#status-bar  {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 2px;
+    margin: 6px;
+    border-top: 2px solid #7B7B7B;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+    border-left: 2px solid #7B7B7B;
+}
+
+td {
+    height: 20px;
+    width: 20px;
+    background-color: #C0C0C0;
+    border: 1.5px solid;
+    border-top-color: #ffffff;
+    border-right-color: #7B7B7B;
+    border-bottom-color: #7B7B7B;
+    border-left-color: #ffffff;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#timer, #bomb-counter {
+    /* font-family: 'Digital Dismay'; */
+    font-size: 35px;
+    letter-spacing: 1px;
+    color: red;
+    background-color: black;
+    text-align: center;
+    padding: 4px 4px 0 7px;
+    line-height: 1em;
+}
+
+#window-title {
+    font-family: 'MS Sans Serif';
+    letter-spacing: .5px;
+    float: center;
+    color: #D5DEF3;
+    font-size: 16px;
+}
+
+#window-title-bar {
+    background: -moz-linear-gradient(left, rgba(33,41,89,1) 0%, rgba(33,41,89,1) 11%, rgba(80,114,161,1) 56%, rgba(117,172,219,0.7) 92%, rgba(125,185,232,0) 100%);
+    background: -webkit-linear-gradient(left, rgba(33,41,89,1) 0%,rgba(33,41,89,1) 11%,rgba(80,114,161,1) 56%,rgba(117,172,219,0.7) 92%,rgba(125,185,232,0) 100%);
+    background: linear-gradient(to right, rgba(33,41,89,1) 0%,rgba(33,41,89,1) 11%,rgba(80,114,161,1) 56%,rgba(117,172,219,0.7) 92%,rgba(125,185,232,0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#212959', endColorstr='#007db9e8',GradientType=1 );
+}
