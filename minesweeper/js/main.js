@@ -1,11 +1,11 @@
 /*----- constants -----*/
 var bombImage = '<img src="images/bomb.png">';
 var flagImage = '<img src="images/flag.png">';
-var wrongBombImage = '<img src="images/wrong-bomb.png">'
+var wrongBombImage = '<img src="images/wrong-bomb.png">';
 var sizeLookup = {
-  '9': {totalBombs: 10, tableWidth: '245px'},
-  '16': {totalBombs: 40, tableWidth: '420px'},
-  '30': {totalBombs: 160, tableWidth: '794px'}
+  '9': { totalBombs: 10, tableWidth: '245px' },
+  '16': { totalBombs: 40, tableWidth: '420px' },
+  '26': { totalBombs: 100, tableWidth: '665px' },
 };
 var colors = [
   '',
@@ -21,14 +21,7 @@ var colors = [
 
 /*----- app's state (variables) -----*/
 var size = 16;
-var board;
-var bombCount;
-var timeElapsed;
-var adjBombs;
-var hitBomb;
-var elapsedTime;
-var timerId;
-var winner;
+var board, bombCount, timeElapsed, adjBombs, hitBomb, elapsedTime, timerId, winner;
 
 /*----- cached element references -----*/
 var boardEl = document.getElementById('board');
@@ -40,99 +33,105 @@ document.getElementById('size-btns').addEventListener('click', function(e) {
   render();
 });
 
-boardEl.addEventListener('click', function(e) {
+boardEl.addEventListener('click', function (e) {
   if (winner || hitBomb) return;
-  var clickedEl;
-  clickedEl = e.target.tagName.toLowerCase() === 'img' ? e.target.parentElement : e.target;
+
+  var clickedEl = e.target.tagName.toLowerCase() === 'img' ? e.target.parentElement : e.target;
   if (clickedEl.classList.contains('game-cell')) {
     if (!timerId) setTimer();
+
     var row = parseInt(clickedEl.dataset.row);
     var col = parseInt(clickedEl.dataset.col);
     var cell = board[row][col];
+
     if (e.shiftKey && !cell.revealed && bombCount > 0) {
       bombCount += cell.flag() ? -1 : 1;
-    } else {
+    } else if (!cell.flagged) {
       hitBomb = cell.reveal();
       if (hitBomb) {
         revealAll();
         clearInterval(timerId);
-        e.target.style.backgroundColor = 'red';
+        clickedEl.style.backgroundColor = 'red';
       }
     }
-    winner = getWinner();
+
+    winner = checkWinner();
     render();
   }
 });
 
-function createResetListener() { 
-  document.getElementById('reset').addEventListener('click', function() {
+function createResetListener() {
+  document.getElementById('reset').addEventListener('click', function () {
     init();
     render();
   });
 }
 
 /*----- functions -----*/
-function setTimer () {
-  timerId = setInterval(function(){
+
+function setTimer() {
+  timerId = setInterval(function () {
     elapsedTime += 1;
     document.getElementById('timer').innerText = elapsedTime.toString().padStart(3, '0');
   }, 1000);
-};
+}
 
 function revealAll() {
-  board.forEach(function(rowArr) {
-    rowArr.forEach(function(cell) {
-      cell.reveal();
-    });
-  });
-};
-
-function buildTable() {
-  var topRow = `
-  <tr>
-    <td class="menu" id="window-title-bar" colspan="${size}">
-      <div id="window-title">Minesweeper</div>
-    </td>
-  </tr>
-    <tr>
-      <td class="menu" colspan="${size}">
-          <section id="status-bar">
-            <div id="bomb-counter">000</div>
-            <div id="reset"><img src="images/btnreset.png"></div>
-            <div id="timer">000</div>
-          </section>
-      </td>
-    </tr>
-    `;
-  boardEl.innerHTML = topRow + `<tr>${'<td class="game-cell"></td>'.repeat(size)}</tr>`.repeat(size);
-  boardEl.style.width = sizeLookup[size].tableWidth;
-  createResetListener();
-  var cells = Array.from(document.querySelectorAll('td:not(.menu)'));
-  cells.forEach(function(cell, idx) {
-    cell.setAttribute('data-row', Math.floor(idx / size));
-    cell.setAttribute('data-col', idx % size);
+  board.flat().forEach(function (cell) {
+    cell.reveal();
   });
 }
 
-function buildArrays() {
-  var arr = Array(size).fill(null);
-  arr = arr.map(function() {
-    return new Array(size).fill(null);
-  });
-  return arr;
-};
+function buildTable() {
+  let rows = `
+    <tr>
+      <td class="menu" id="window-title-bar" colspan="${size}">
+        <div id="window-title">Minesweeper</div>
+      </td>
+    </tr>
+    <tr>
+      <td class="menu" colspan="${size}">
+        <section id="status-bar">
+          <div id="bomb-counter">000</div>
+          <div id="reset"><img src="images/btnreset.png"></div>
+          <div id="timer">000</div>
+        </section>
+      </td>
+    </tr>
+  `;
 
-function buildCells(){
-  board.forEach(function(rowArr, rowIdx) {
-    rowArr.forEach(function(slot, colIdx) {
+  // Tambahkan baris untuk papan permainan
+  for (let i = 0; i < size; i++) {
+    rows += `<tr>${'<td class="game-cell"></td>'.repeat(size)}</tr>`;
+  }
+
+  // Pastikan elemen tabel tertutup dengan benar
+  boardEl.innerHTML = `<table>${rows}</table>`;
+  boardEl.style.width = sizeLookup[size].tableWidth;
+
+  // Tambahkan atribut data-row dan data-col
+  Array.from(document.querySelectorAll('td:not(.menu)')).forEach((cell, idx) => {
+    cell.setAttribute('data-row', Math.floor(idx / size));
+    cell.setAttribute('data-col', idx % size);
+  });
+
+  createResetListener();
+}
+
+
+function buildArrays() {
+  return Array.from({ length: size }, () => Array(size).fill(null));
+}
+
+function buildCells() {
+  board.forEach((rowArr, rowIdx) => {
+    rowArr.forEach((_, colIdx) => {
       board[rowIdx][colIdx] = new Cell(rowIdx, colIdx, board);
     });
   });
   addBombs();
-  runCodeForAllCells(function(cell){
-    cell.calcAdjBombs();
-  });
-};
+  runCodeForAllCells(cell => cell.calcAdjBombs());
+}
 
 function init() {
   buildTable();
@@ -144,86 +143,71 @@ function init() {
   timerId = null;
   hitBomb = false;
   winner = false;
-};
+}
 
 function getBombCount() {
-  var count = 0;
-  board.forEach(function(row){
-    count += row.filter(function(cell) {
-      return cell.bomb;
-    }).length
-  });
-  return count;
-};
+  return board.flat().filter(cell => cell.bomb).length;
+}
 
 function addBombs() {
-  var currentTotalBombs = sizeLookup[`${size}`].totalBombs;
-  while (currentTotalBombs !== 0) {
-    var row = Math.floor(Math.random() * size);
-    var col = Math.floor(Math.random() * size);
-    var currentCell = board[row][col]
-    if (!currentCell.bomb){
-      currentCell.bomb = true
-      currentTotalBombs -= 1
+  let currentTotalBombs = sizeLookup[size].totalBombs;
+  while (currentTotalBombs > 0) {
+    const row = Math.floor(Math.random() * size);
+    const col = Math.floor(Math.random() * size);
+    if (!board[row][col].bomb) {
+      board[row][col].bomb = true;
+      currentTotalBombs -= 1;
     }
   }
-};
+}
 
-function getWinner() {
-  for (var row = 0; row<board.length; row++) {
-    for (var col = 0; col<board[0].length; col++) {
-      var cell = board[row][col];
-      if (!cell.revealed && !cell.bomb) return false;
-    }
-  } 
-  return true;
-};
+function checkWinner() {
+  return board.flat().every(cell => cell.revealed || cell.bomb);
+}
 
 function render() {
   document.getElementById('bomb-counter').innerText = bombCount.toString().padStart(3, '0');
-  var seconds = timeElapsed % 60;
-  var tdList = Array.from(document.querySelectorAll('[data-row]'));
-  tdList.forEach(function(td) {
-    var rowIdx = parseInt(td.getAttribute('data-row'));
-    var colIdx = parseInt(td.getAttribute('data-col'));
-    var cell = board[rowIdx][colIdx];
+  const cells = Array.from(document.querySelectorAll('[data-row]'));
+  cells.forEach(function (cellEl) {
+    const row = parseInt(cellEl.getAttribute('data-row'));
+    const col = parseInt(cellEl.getAttribute('data-col'));
+    const cell = board[row][col];
+
     if (cell.flagged) {
-      td.innerHTML = flagImage;
+      cellEl.innerHTML = flagImage;
     } else if (cell.revealed) {
       if (cell.bomb) {
-        td.innerHTML = bombImage;
-      } else if (cell.adjBombs) {
-        td.className = 'revealed'
-        td.style.color = colors[cell.adjBombs];
-        td.textContent = cell.adjBombs;
+        cellEl.innerHTML = bombImage;
+      } else if (cell.adjBombs > 0) {
+        cellEl.className = 'revealed';
+        cellEl.style.color = colors[cell.adjBombs];
+        cellEl.textContent = cell.adjBombs;
       } else {
-        td.className = 'revealed'
+        cellEl.className = 'revealed';
       }
     } else {
-      td.innerHTML = '';
+      cellEl.innerHTML = '';
     }
   });
+
   if (hitBomb) {
-    document.getElementById('reset').innerHTML = '<img src=images/dead-face.png>';
-    runCodeForAllCells(function(cell) {
+    document.getElementById('reset').innerHTML = '<img src="images/dead-face.png">';
+    board.flat().forEach(cell => {
       if (!cell.bomb && cell.flagged) {
-        var td = document.querySelector(`[data-row="${cell.row}"][data-col="${cell.col}"]`);
+        const td = document.querySelector(`[data-row="${cell.row}"][data-col="${cell.col}"]`);
         td.innerHTML = wrongBombImage;
       }
     });
   } else if (winner) {
-    document.getElementById('reset').innerHTML = '<img src=images/cool-face.png>';
+    document.getElementById('reset').innerHTML = '<img src="images/cool-face.png">';
     clearInterval(timerId);
   }
-};
-
-function runCodeForAllCells(cb) {
-  board.forEach(function(rowArr) {
-    rowArr.forEach(function(cell) {
-      cb(cell);
-    });
-  });
 }
 
+function runCodeForAllCells(cb) {
+  board.flat().forEach(cb);
+}
+
+/* Initialize Game */
 init();
 render();
