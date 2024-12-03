@@ -26,22 +26,61 @@ body {
   }
 
 button {
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-    font-weight: bold;
-    color: white;
-    border: none;
-    border-radius: 30px;
-    padding: 10px 20px;
+    align-items: center;
+    background-color: #fee6e3;
+    border: 2px solid #111;
+    border-radius: 8px;
+    box-sizing: border-box;
+    color: #111;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
+    font-family: Inter,sans-serif;
+    font-size: 16px;
+    height: 48px;
+    justify-content: center;
+    line-height: 24px;
+    max-width: 100%;
+    padding: 0 25px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
 }
 
-button:hover {
-    background-color: lightgray;
-    color: slategray;
-    cursor: pointer;
-}
+button:after {
+    background-color: #111;
+    border-radius: 8px;
+    content: "";
+    display: block;
+    height: 48px;
+    left: 0;
+    width: 100%;
+    position: absolute;
+    top: -2px;
+    transform: translate(8px, 8px);
+    transition: transform .2s ease-out;
+    z-index: -1;
+  }
+
+button:hover:after {
+    transform: translate(0, 0);
+  }
+  
+  button:active {
+    background-color: #ffdeda;
+    outline: 0;
+  }
+  
+  button:hover {
+    outline: 0;
+  }
+  
+  @media (min-width: 768px) {
+    button {
+      padding: 0 40px;
+    }
+  }
 
 .easy {
     background-color: #4CAF50;
@@ -66,7 +105,7 @@ button:hover {
 .hard:hover {
     background-color: #d32f2f;
   }
-
+  
 #clock {
     font-family: 'Arial', sans-serif;
     font-size: 12px;
@@ -143,17 +182,17 @@ button:hover {
     margin: auto;
 }
 
-#reset:hover {
-    text-align: center;
-    cursor: pointer;
-}
-
 .revealed {
     font-family: "Press Start";
     background-color: #C0C0C0;
     font-size: 80%;
     text-align: center;
     border: none;
+}
+
+#reset:hover {
+    text-align: center;
+    cursor: pointer;
 }
 
 .sidebar {
@@ -220,5 +259,5 @@ td {
     background: -moz-linear-gradient(left, rgba(33,41,89,1) 0%, rgba(33,41,89,1) 11%, rgba(80,114,161,1) 56%, rgba(117,172,219,0.7) 92%, rgba(125,185,232,0) 100%);
     background: -webkit-linear-gradient(left, rgba(33,41,89,1) 0%,rgba(33,41,89,1) 11%,rgba(80,114,161,1) 56%,rgba(117,172,219,0.7) 92%,rgba(125,185,232,0) 100%);
     background: linear-gradient(to right, rgba(33,41,89,1) 0%,rgba(33,41,89,1) 11%,rgba(80,114,161,1) 56%,rgba(117,172,219,0.7) 92%,rgba(125,185,232,0) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#212959', endColorstr='#007db9e8',GradientType=1 );
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#212959', endColorstr='#007db9e8',GradientType=1 );
 }
