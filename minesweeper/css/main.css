@@ -1,6 +1,6 @@
 @font-face {
-    font-family: "Press Start";
-    src: url("./prstart.ttf");
+    font-family: "pixel";
+    src: url("./Poxast.ttf");
 }
 
 * {
@@ -106,7 +106,7 @@ button:hover {
 .hard:hover {
     background-color: #d32f2f;
   }
-
+  
 #clock {
     font-family: 'Arial', sans-serif;
     font-size: 12px;
@@ -185,9 +185,9 @@ button:hover {
 }
 
 .revealed {
-    font-family: "Press Start";
+    font-family: "pixel";
     background-color: #C0C0C0;
-    font-size: 80%;
+    font-size: 50%;
     text-align: center;
     border: none;
 }
