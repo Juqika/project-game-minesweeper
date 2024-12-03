@@ -26,19 +26,14 @@
     <script src="js/main.js"></script>
 
     <script>
-        // Tambahkan script pengganti jQuery jika diperlukan
         document.addEventListener("DOMContentLoaded", function () {
-            // Contoh mengganti event handler jQuery dengan Vanilla JS
             const buttons = document.querySelectorAll("#size-btns button");
             buttons.forEach(button => {
                 button.addEventListener("click", function () {
-                    const size = this.id.split("-")[1]; // Mendapatkan ukuran dari ID tombol
+                    const size = this.id.split("-")[1];
                     console.log(`Selected size: ${size}`);
-                    // Tambahkan logika untuk mengatur ulang papan game sesuai ukuran
                 });
             });
-
-            // Tambahkan script lain jika sebelumnya mengandalkan jQuery
         });
     </script>
 </body>
