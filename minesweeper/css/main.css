@@ -30,10 +30,11 @@ button {
     background-color: #fee6e3;
     border: 2px solid #111;
     border-radius: 8px;
+    margin: -8px 15px;
     box-sizing: border-box;
     color: #111;
     cursor: pointer;
-    font-family: Inter,sans-serif;
+    font-family: Inter, sans-serif;
     font-size: 16px;
     height: 48px;
     justify-content: center;
@@ -61,26 +62,26 @@ button:after {
     transform: translate(8px, 8px);
     transition: transform .2s ease-out;
     z-index: -1;
-  }
+}
 
 button:hover:after {
     transform: translate(0, 0);
-  }
-  
-  button:active {
+}
+
+button:active {
     background-color: #ffdeda;
     outline: 0;
-  }
-  
-  button:hover {
+}
+
+button:hover {
     outline: 0;
-  }
-  
-  @media (min-width: 768px) {
+}
+
+@media (min-width: 768px) {
     button {
-      padding: 0 40px;
+        padding: 0 40px;
     }
-  }
+}
 
 .easy {
     background-color: #4CAF50;
@@ -116,6 +117,7 @@ button:hover:after {
     float: right;
     border: 2px solid #000000;
     border-radius: 5px;
+    margin: -4px 10px;
     width: auto;
     height: 30px;
     padding: 5px 10px;
@@ -259,5 +261,5 @@ td {
     background: -moz-linear-gradient(left, rgba(33,41,89,1) 0%, rgba(33,41,89,1) 11%, rgba(80,114,161,1) 56%, rgba(117,172,219,0.7) 92%, rgba(125,185,232,0) 100%);
     background: -webkit-linear-gradient(left, rgba(33,41,89,1) 0%,rgba(33,41,89,1) 11%,rgba(80,114,161,1) 56%,rgba(117,172,219,0.7) 92%,rgba(125,185,232,0) 100%);
     background: linear-gradient(to right, rgba(33,41,89,1) 0%,rgba(33,41,89,1) 11%,rgba(80,114,161,1) 56%,rgba(117,172,219,0.7) 92%,rgba(125,185,232,0) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#212959', endColorstr='#007db9e8',GradientType=1 );
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#212959', endColorstr='#007db9e8',GradientType=1 );
 }
