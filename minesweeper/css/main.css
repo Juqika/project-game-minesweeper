@@ -147,7 +147,7 @@ button:hover {
     text-align: center;
     position: fixed;
     height: 38px;
-    background-color: #2A1762;
+    background-image: linear-gradient(144deg,#3d145a 50%, #2b2270 ,#00676e); 
     bottom: 0px;
     left: 0px;
     right: 0px;
