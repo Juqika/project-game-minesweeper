@@ -6,6 +6,7 @@ var sizeLookup = {
   '9': { totalBombs: 10, tableWidth: '245px' },
   '16': { totalBombs: 40, tableWidth: '420px' },
   '26': { totalBombs: 100, tableWidth: '665px' },
+  '2': { totalBombs: 1, tableWidth: '300px' },
 };
 var colors = [
   '',
@@ -93,7 +94,7 @@ function buildTable() {
       <td class="menu" colspan="${size}">
         <section id="status-bar">
           <div id="bomb-counter">000</div>
-          <div id="reset"><img src="images/btnreset.png"></div>
+          <div id="reset"> &#8635; </div>
           <div id="timer">000</div>
         </section>
       </td>
@@ -191,7 +192,7 @@ function render() {
   });
 
   if (hitBomb) {
-    document.getElementById('reset').innerHTML = '<img src="images/dead-face.png">';
+    document.getElementById('reset').innerHTML = '<div id="deadface">&#128128</div>';
     board.flat().forEach(cell => {
       if (!cell.bomb && cell.flagged) {
         const td = document.querySelector(`[data-row="${cell.row}"][data-col="${cell.col}"]`);
@@ -199,7 +200,7 @@ function render() {
       }
     });
   } else if (winner) {
-    document.getElementById('reset').innerHTML = '<img src="images/cool-face.png">';
+    document.getElementById('reset').innerHTML = '<div id="coolface">&#128526</div>';
     clearInterval(timerId);
   }
 }
@@ -208,6 +209,6 @@ function runCodeForAllCells(cb) {
   board.flat().forEach(cb);
 }
 
-
+/* Initialize Game */
 init();
 render();
