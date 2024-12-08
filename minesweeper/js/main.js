@@ -208,6 +208,6 @@ function runCodeForAllCells(cb) {
   board.flat().forEach(cb);
 }
 
-/* Initialize Game */
+
 init();
 render();
