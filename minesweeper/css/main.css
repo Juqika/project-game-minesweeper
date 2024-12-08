@@ -3,7 +3,7 @@
     src: url("./Poxast.ttf");
 }
 
-* {
+ *{
     -o-user-select: none;
     user-select: none;
 }

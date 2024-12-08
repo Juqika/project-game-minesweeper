@@ -9,7 +9,7 @@ class Cell {
         this.adjBombs = 0;
     }
 
-    // Get all adjacent cells using relative offsets
+    // Get all adjacent cells using relative offset
     getAdjCells() {
         const directions = [
             [-1, -1], [-1, 0], [-1, 1],
